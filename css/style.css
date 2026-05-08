@@ -1,164 +1,373 @@
-/********** Template CSS **********/
+/* ============================================
+   TABLE OF CONTENTS
+   ============================================
+   1. CSS RESET & GLOBAL VARIABLES
+   2. UTILITY CLASSES
+   3. ANIMATIONS & KEYFRAMES
+   4. SPINNER COMPONENT
+   5. TYPOGRAPHY & HEADINGS
+   6. BUTTON COMPONENTS
+   7. NAVIGATION BAR
+   8. CAROUSEL COMPONENT
+   9. SECTION TITLES
+   10. SERVICE CARDS
+   11. TESTIMONIALS
+   12. TEAM CARDS
+   13. MISCELLANEOUS COMPONENTS
+   14. RESPONSIVE UTILITIES
+   ============================================ */
+
+/* ========== 1. CSS RESET & GLOBAL VARIABLES ========== */
 :root {
+    /* Colors */
     --primary: #06A3DA;
+    --primary-dark: #0588b8;
+    --primary-light: #4bc1f0;
     --secondary: #34AD54;
+    --secondary-dark: #2a8a43;
     --light: #EEF9FF;
     --dark: #091E3E;
+    --dark-light: #122f5c;
+    --gray: #6c757d;
+    --gray-light: #e9ecef;
+    --white: #ffffff;
+    --black: #000000;
+    
+    /* Typography */
+    --font-primary: 'Nunito', sans-serif;
+    --font-size-base: 16px;
+    --font-size-sm: 14px;
+    --font-size-lg: 18px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 30px;
+    --font-size-3xl: 36px;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+    
+    /* Transitions */
+    --transition-fast: 0.3s ease;
+    --transition-base: 0.5s ease;
+    --transition-slow: 0.8s ease;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    
+    /* Z-Indices */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
+    --z-spinner: 99999;
 }
 
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light: #1a1a2e;
+        --dark: #eef9ff;
+        --gray-light: #2d2d3d;
+    }
+}
 
-/*** Spinner ***/
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ========== 2. UTILITY CLASSES ========== */
+/* Text utilities */
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-dark { color: var(--dark); }
+.text-light { color: var(--light); }
+.text-gray { color: var(--gray); }
+
+/* Background utilities */
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-dark { background-color: var(--dark); }
+.bg-light { background-color: var(--light); }
+
+/* Spacing utilities */
+.m-0 { margin: 0; }
+.p-0 { padding: 0; }
+.mt-auto { margin-top: auto; }
+.mb-auto { margin-bottom: auto; }
+
+/* Display utilities */
+.d-none { display: none; }
+.d-block { display: block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+
+/* Flex utilities */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== 3. ANIMATIONS & KEYFRAMES ========== */
+
+/* 3D Rotate animation for spinner */
+@keyframes rotate-plane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}
+
+@keyframes slide-line {
+    0% { 
+        left: 0; 
+    } 
+    50% { 
+        left: 145px; 
+    } 
+    100% { 
+        left: 0; 
+    }
+}
+
+@keyframes slide-line-center {
+    0% { 
+        left: 50%; 
+        margin-left: -75px; 
+    } 
+    50% { 
+        left: 50%; 
+        margin-left: 45px; 
+    } 
+    100% { 
+        left: 50%; 
+        margin-left: -75px; 
+    }
+}
+
+@keyframes slide-line-sm {
+    0% { 
+        left: 0; 
+    } 
+    50% { 
+        left: 85px; 
+    } 
+    100% { 
+        left: 0; 
+    }
+}
+
+/* ========== 4. SPINNER COMPONENT ========== */
+/**
+ * Loading spinner component
+ * Usage: Add class 'spinner' to a div, and 'show' to #spinner for visibility
+ */
 .spinner {
     width: 40px;
     height: 40px;
     background: var(--primary);
-    margin: 100px auto;
-    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
-    animation: sk-rotateplane 1.2s infinite ease-in-out;
-}
-
-@-webkit-keyframes sk-rotateplane {
-    0% {
-        -webkit-transform: perspective(120px)
-    }
-    50% {
-        -webkit-transform: perspective(120px) rotateY(180deg)
-    }
-    100% {
-        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
-    }
-}
-
-@keyframes sk-rotateplane {
-    0% {
-        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
-    }
-    50% {
-        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
-    }
-    100% {
-        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-    }
+    margin: var(--spacing-2xl) auto;
+    animation: rotate-plane 1.2s infinite ease-in-out;
 }
 
 #spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
     opacity: 0;
     visibility: hidden;
-    transition: opacity .5s ease-out, visibility 0s linear .5s;
-    z-index: 99999;
+    transition: opacity var(--transition-base) ease-out, 
+                visibility 0s linear var(--transition-base);
+    z-index: var(--z-spinner);
+}
+
+/* Prevent body scroll when spinner is visible */
+body:has(#spinner.show) {
+    overflow: hidden;
 }
 
 #spinner.show {
-    transition: opacity .5s ease-out, visibility 0s linear 0s;
+    transition: opacity var(--transition-base) ease-out, 
+                visibility 0s linear 0s;
     visibility: visible;
     opacity: 1;
 }
 
-
-/*** Heading ***/
-h1,
-h2,
-.fw-bold {
+/* ========== 5. TYPOGRAPHY & HEADINGS ========== */
+/* Heading font weights following a consistent scale */
+h1, h2, .fw-bold {
     font-weight: 800 !important;
 }
 
-h3,
-h4,
-.fw-semi-bold {
+h3, h4, .fw-semi-bold {
     font-weight: 700 !important;
 }
 
-h5,
-h6,
-.fw-medium {
+h5, h6, .fw-medium {
     font-weight: 600 !important;
 }
 
-
-/*** Button ***/
-.btn {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
-    transition: .5s;
+/* Responsive typography */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    body { font-size: var(--font-size-sm); }
 }
 
+/* ========== 6. BUTTON COMPONENTS ========== */
+.btn {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    transition: var(--transition-base);
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Focus states for accessibility */
+.btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Primary button with hover effect */
 .btn-primary,
 .btn-secondary {
-    color: #FFFFFF;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
     box-shadow: inset 0 0 0 50px transparent;
 }
 
-.btn-primary:hover {
-    box-shadow: inset 0 0 0 0 var(--primary);
+.btn-primary:hover,
+.btn-primary:focus-visible {
+    box-shadow: inset 0 0 0 50px var(--primary-dark);
+    transform: translateY(-2px);
 }
 
-.btn-secondary:hover {
-    box-shadow: inset 0 0 0 0 var(--secondary);
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+    box-shadow: inset 0 0 0 50px var(--secondary-dark);
+    transform: translateY(-2px);
 }
 
+/* Disabled state */
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Square buttons for icons */
 .btn-square {
     width: 36px;
     height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
 }
 
 .btn-sm-square {
     width: 30px;
     height: 30px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
 }
 
 .btn-lg-square {
     width: 48px;
     height: 48px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
 }
 
-.btn-square,
-.btn-sm-square,
-.btn-lg-square {
-    padding-left: 0;
-    padding-right: 0;
-    text-align: center;
-}
-
-
-/*** Navbar ***/
+/* ========== 7. NAVIGATION BAR ========== */
 .navbar-dark .navbar-nav .nav-link {
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-primary);
     position: relative;
-    margin-left: 25px;
+    margin-left: var(--spacing-lg);
     padding: 35px 0;
-    color: #FFFFFF;
-    font-size: 18px;
+    color: var(--white);
+    font-size: var(--font-size-lg);
     font-weight: 600;
-    outline: none;
-    transition: .5s;
+    transition: var(--transition-base);
+    text-decoration: none;
 }
 
+/* Sticky navbar state */
 .sticky-top.navbar-dark .navbar-nav .nav-link {
     padding: 20px 0;
     color: var(--dark);
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus-visible,
 .navbar-dark .navbar-nav .nav-link.active {
     color: var(--primary);
 }
 
 .navbar-dark .navbar-brand h1 {
-    color: #FFFFFF;
+    color: var(--white);
+    transition: var(--transition-base);
 }
 
+/* Toggle button */
 .navbar-dark .navbar-toggler {
     color: var(--primary) !important;
     border-color: var(--primary) !important;
 }
 
+.navbar-dark .navbar-toggler:focus {
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Mobile navigation */
 @media (max-width: 991.98px) {
     .sticky-top.navbar-dark {
         position: relative;
-        background: #FFFFFF;
+        background: var(--white);
     }
 
     .navbar-dark .navbar-nav .nav-link,
@@ -171,23 +380,42 @@ h6,
     .navbar-dark .navbar-brand h1 {
         color: var(--primary);
     }
+    
+    /* Mobile menu animation */
+    .navbar-collapse {
+        transition: var(--transition-base);
+    }
 }
 
+/* Desktop navigation with underline animation */
 @media (min-width: 992px) {
     .navbar-dark {
         position: absolute;
         width: 100%;
         top: 0;
         left: 0;
-        border-bottom: 1px solid rgba(256, 256, 256, .1);
-        z-index: 999;
+        border-bottom: 1px solid rgba(256, 256, 256, 0.1);
+        z-index: var(--z-sticky);
+        background: transparent;
     }
     
     .sticky-top.navbar-dark {
         position: fixed;
-        background: #FFFFFF;
+        background: var(--white);
+        animation: slideDown 0.3s ease;
+        box-shadow: var(--shadow-md);
+    }
+    
+    @keyframes slideDown {
+        from {
+            transform: translateY(-100%);
+        }
+        to {
+            transform: translateY(0);
+        }
     }
 
+    /* Animated underline effect */
     .navbar-dark .navbar-nav .nav-link::before {
         position: absolute;
         content: "";
@@ -196,13 +424,16 @@ h6,
         bottom: -1px;
         left: 50%;
         background: var(--primary);
-        transition: .5s;
+        transition: var(--transition-base);
+        transform: translateX(-50%);
     }
 
     .navbar-dark .navbar-nav .nav-link:hover::before,
+    .navbar-dark .navbar-nav .nav-link:focus-visible::before,
     .navbar-dark .navbar-nav .nav-link.active::before {
         width: 100%;
         left: 0;
+        transform: translateX(0);
     }
 
     .navbar-dark .navbar-nav .nav-link.nav-contact::before {
@@ -214,20 +445,24 @@ h6,
     }
 }
 
-
-/*** Carousel ***/
+/* ========== 8. CAROUSEL COMPONENT ========== */
 .carousel-caption {
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(9, 30, 62, .7);
+    background: rgba(9, 30, 62, 0.7);
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Mobile carousel typography */
 @media (max-width: 576px) {
     .carousel-caption h5 {
-        font-size: 14px;
+        font-size: var(--font-size-sm);
         font-weight: 500 !important;
     }
 
@@ -240,16 +475,33 @@ h6,
 .carousel-control-prev,
 .carousel-control-next {
     width: 10%;
+    opacity: 0;
+    transition: var(--transition-base);
+}
+
+.carousel:hover .carousel-control-prev,
+.carousel:hover .carousel-control-next {
+    opacity: 1;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     width: 3rem;
     height: 3rem;
+    background-size: 60% 60%;
 }
 
+/* ========== 9. SECTION TITLES ========== */
+/**
+ * Section title with animated underline
+ * Usage: Add class 'section-title' to heading element
+ */
+.section-title {
+    position: relative;
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
 
-/*** Section Title ***/
 .section-title::before {
     position: absolute;
     content: "";
@@ -263,7 +515,8 @@ h6,
 
 .section-title.text-center::before {
     left: 50%;
-    margin-left: -75px;
+    transform: translateX(-50%);
+    margin-left: 0;
 }
 
 .section-title.section-title-sm::before {
@@ -271,15 +524,15 @@ h6,
     height: 3px;
 }
 
+/* Animated indicator */
 .section-title::after {
     position: absolute;
     content: "";
     width: 6px;
     height: 5px;
-    bottom: 0px;
-    background: #FFFFFF;
-    -webkit-animation: section-title-run 5s infinite linear;
-    animation: section-title-run 5s infinite linear;
+    bottom: 0;
+    background: var(--white);
+    animation: slide-line 5s infinite linear;
 }
 
 .section-title.section-title-sm::after {
@@ -288,38 +541,31 @@ h6,
 }
 
 .section-title.text-center::after {
-    -webkit-animation: section-title-run-center 5s infinite linear;
-    animation: section-title-run-center 5s infinite linear;
+    animation: slide-line-center 5s infinite linear;
 }
 
 .section-title.section-title-sm::after {
-    -webkit-animation: section-title-run-sm 5s infinite linear;
-    animation: section-title-run-sm 5s infinite linear;
+    animation: slide-line-sm 5s infinite linear;
 }
 
-@-webkit-keyframes section-title-run {
-    0% {left: 0; } 50% { left : 145px; } 100% { left: 0; }
-}
-
-@-webkit-keyframes section-title-run-center {
-    0% { left: 50%; margin-left: -75px; } 50% { left : 50%; margin-left: 45px; } 100% { left: 50%; margin-left: -75px; }
-}
-
-@-webkit-keyframes section-title-run-sm {
-    0% {left: 0; } 50% { left : 85px; } 100% { left: 0; }
-}
-
-
-/*** Service ***/
+/* ========== 10. SERVICE CARDS ========== */
 .service-item {
     position: relative;
-    height: 300px;
-    padding: 0 30px;
-    transition: .5s;
+    min-height: 300px;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    transition: var(--transition-base);
+    background: var(--white);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .service-item .service-icon {
-    margin-bottom: 30px;
+    margin-bottom: var(--spacing-lg);
     width: 60px;
     height: 60px;
     display: flex;
@@ -328,10 +574,18 @@ h6,
     background: var(--primary);
     border-radius: 2px;
     transform: rotate(-45deg);
+    transition: var(--transition-base);
+}
+
+.service-item:hover .service-icon {
+    transform: rotate(0deg);
+    border-radius: 50%;
 }
 
 .service-item .service-icon i {
     transform: rotate(45deg);
+    font-size: 24px;
+    color: var(--white);
 }
 
 .service-item a.btn {
@@ -339,8 +593,9 @@ h6,
     width: 60px;
     bottom: -48px;
     left: 50%;
-    margin-left: -30px;
+    transform: translateX(-50%);
     opacity: 0;
+    transition: var(--transition-base);
 }
 
 .service-item:hover a.btn {
@@ -348,24 +603,24 @@ h6,
     opacity: 1;
 }
 
-
-/*** Testimonial ***/
+/* ========== 11. TESTIMONIALS ========== */
 .testimonial-carousel .owl-dots {
-    margin-top: 15px;
+    margin-top: var(--spacing-md);
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    gap: var(--spacing-sm);
 }
 
 .testimonial-carousel .owl-dot {
     position: relative;
     display: inline-block;
-    margin: 0 5px;
     width: 15px;
     height: 15px;
-    background: #DDDDDD;
+    background: var(--gray-light);
     border-radius: 2px;
-    transition: .5s;
+    transition: var(--transition-base);
+    cursor: pointer;
 }
 
 .testimonial-carousel .owl-dot.active {
@@ -379,18 +634,24 @@ h6,
 }
 
 .testimonial-carousel .owl-item .testimonial-item {
-    transition: .5s;
+    transition: var(--transition-base);
+    padding: var(--spacing-lg);
+    border-radius: 0.5rem;
 }
 
 .testimonial-carousel .owl-item.center .testimonial-item {
-    background: #FFFFFF !important;
-    box-shadow: 0 0 30px #DDDDDD;
+    background: var(--white) !important;
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.05);
 }
 
-
-/*** Team ***/
+/* ========== 12. TEAM CARDS ========== */
 .team-item {
-    transition: .5s;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-base);
+    border-radius: 0.5rem;
+    background: var(--white);
 }
 
 .team-social {
@@ -402,61 +663,58 @@ h6,
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: .5s;
+    gap: var(--spacing-sm);
+    transition: var(--transition-base);
+    background: transparent;
 }
 
 .team-social a.btn {
-    position: relative;
-    margin: 0 3px;
-    margin-top: 100px;
+    transform: translateY(100px);
     opacity: 0;
+    transition: all var(--transition-base);
 }
 
 .team-item:hover {
-    box-shadow: 0 0 30px #DDDDDD;
+    box-shadow: var(--shadow-lg);
 }
 
 .team-item:hover .team-social {
-    background: rgba(9, 30, 62, .7);
+    background: rgba(9, 30, 62, 0.7);
 }
 
-.team-item:hover .team-social a.btn:first-child {
+/* Staggered animation for social icons */
+.team-item:hover .team-social a.btn {
+    transform: translateY(0);
     opacity: 1;
-    margin-top: 0;
-    transition: .3s 0s;
 }
 
-.team-item:hover .team-social a.btn:nth-child(2) {
-    opacity: 1;
-    margin-top: 0;
-    transition: .3s .05s;
-}
+.team-item:hover .team-social a.btn:nth-child(1) { transition-delay: 0s; }
+.team-item:hover .team-social a.btn:nth-child(2) { transition-delay: 0.05s; }
+.team-item:hover .team-social a.btn:nth-child(3) { transition-delay: 0.1s; }
+.team-item:hover .team-social a.btn:nth-child(4) { transition-delay: 0.15s; }
 
-.team-item:hover .team-social a.btn:nth-child(3) {
-    opacity: 1;
-    margin-top: 0;
-    transition: .3s .1s;
-}
-
-.team-item:hover .team-social a.btn:nth-child(4) {
-    opacity: 1;
-    margin-top: 0;
-    transition: .3s .15s;
+/* Image zoom effect */
+.team-item .team-img,
+.blog-item .blog-img {
+    overflow: hidden;
 }
 
 .team-item .team-img img,
-.blog-item .blog-img img  {
-    transition: .5s;
+.blog-item .blog-img img {
+    transition: transform var(--transition-slow);
+    width: 100%;
+    height: auto;
 }
 
 .team-item:hover .team-img img,
 .blog-item:hover .blog-img img {
-    transform: scale(1.15);
+    transform: scale(1.1);
 }
 
+/* ========== 13. MISCELLANEOUS COMPONENTS ========== */
 
-/*** Miscellaneous ***/
-@media (min-width: 991.98px) {
+/* Facts section - positioned to overlap */
+@media (min-width: 992px) {
     .facts {
         position: relative;
         margin-top: -75px;
@@ -464,29 +722,98 @@ h6,
     }
 }
 
+/* Back to top button */
 .back-to-top {
     position: fixed;
     display: none;
-    right: 45px;
-    bottom: 45px;
-    z-index: 99;
+    right: var(--spacing-xl);
+    bottom: var(--spacing-xl);
+    z-index: var(--z-fixed);
+    background: var(--primary);
+    color: var(--white);
+    width: 44px;
+    height: 44px;
+    border-radius: 0.375rem;
+    transition: var(--transition-base);
+    cursor: pointer;
 }
 
+.back-to-top:hover,
+.back-to-top:focus-visible {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+/* Header background with gradient overlay */
 .bg-header {
-    background: linear-gradient(rgba(9, 30, 62, .7), rgba(9, 30, 62, .7)), url(../img/carousel-1.jpg) center center no-repeat;
+    background: linear-gradient(rgba(9, 30, 62, 0.7), rgba(9, 30, 62, 0.7)), 
+                url('../img/carousel-1.jpg') center center no-repeat;
     background-size: cover;
+    background-attachment: fixed;
 }
 
+/* Animated links */
 .link-animated a {
-    transition: .5s;
+    transition: var(--transition-base);
+    display: inline-block;
 }
 
-.link-animated a:hover {
-    padding-left: 10px;
+.link-animated a:hover,
+.link-animated a:focus-visible {
+    padding-left: var(--spacing-sm);
+    transform: translateX(3px);
 }
 
-@media (min-width: 767.98px) {
+/* Footer positioning */
+@media (min-width: 768px) {
     .footer-about {
         margin-bottom: -75px;
+    }
+}
+
+/* ========== 14. RESPONSIVE UTILITIES ========== */
+/* Print styles */
+@media print {
+    .no-print,
+    .back-to-top,
+    .navbar-toggler,
+    .carousel-control-prev,
+    .carousel-control-next {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .btn-primary,
+    .btn-secondary {
+        border: 2px solid currentColor;
+    }
+    
+    .service-item,
+    .team-item {
+        border: 1px solid currentColor;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .service-item a.btn {
+        opacity: 1;
+        bottom: -24px;
+    }
+    
+    .team-social a.btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .team-social {
+        background: rgba(9, 30, 62, 0.7);
     }
 }
