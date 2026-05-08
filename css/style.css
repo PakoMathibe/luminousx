@@ -20,7 +20,7 @@
 /* ========== 1. CSS RESET & GLOBAL VARIABLES ========== */
 :root {
     /* Colors - All Blue Removed */
-    --primary: #9e7b61;
+    --primary: #9e7b61 !important;
     --primary-dark: #826349;
     --primary-light: #b89b84;
     --primary-soft: #d4c0b0;
