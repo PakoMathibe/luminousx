@@ -3,283 +3,730 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Luminous X - About Us</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>About Luminous X | Trusted IT Solutions Provider in South Africa</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn about Luminous X, a trusted IT solutions provider founded in 2016. We deliver cybersecurity, cloud solutions, and managed IT services to businesses across South Africa.">
+    <meta name="keywords" content="IT company South Africa, about Luminous X, IT solutions provider, technology company Mmabatho, digital transformation partner">
+    <meta name="author" content="Luminous X (Pty) Ltd">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Viewport for Responsive Design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#06A3DA">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="About Luminous X | Your Trusted IT Partner">
+    <meta property="og:description" content="Empowering businesses with innovative IT solutions since 2016. Discover our mission, vision, and commitment to digital transformation.">
+    <meta property="og:image" content="img/og-image.jpg">
+    <meta property="og:url" content="https://www.luminousx.co.za/about.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Luminous X">
+    <meta name="twitter:description" content="Your trusted partner for IT solutions in South Africa">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.luminousx.co.za/about.html">
+    
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    
+    <!-- Preconnect to External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+    
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/animate/animate.min.css" rel="stylesheet">
-
+    
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <!-- Additional About Page CSS -->
+    <style>
+        /* Timeline styles */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: var(--primary);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            float: left;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            float: right;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -15px;
+            border-width: 10px 0 10px 15px;
+            border-color: transparent transparent transparent white;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -15px;
+            border-width: 10px 15px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+        
+        .timeline-badge {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                float: none;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -15px;
+                border-width: 10px 15px 10px 0;
+                border-color: transparent white transparent transparent;
+                right: auto;
+            }
+            
+            .timeline-badge {
+                left: 20px;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Team member cards */
+        .team-member-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .team-member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        
+        .team-member-img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .team-member-img img {
+            transition: transform 0.5s ease;
+        }
+        
+        .team-member-card:hover .team-member-img img {
+            transform: scale(1.1);
+        }
+        
+        .team-member-social {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            background: rgba(6, 163, 218, 0.9);
+            padding: 10px;
+            transition: bottom 0.3s ease;
+            text-align: center;
+        }
+        
+        .team-member-card:hover .team-member-social {
+            bottom: 0;
+        }
+        
+        /* Counter styles */
+        .counter-box {
+            transition: all 0.3s ease;
+        }
+        
+        .counter-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #0588b8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        /* Skip to content link */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            z-index: 9999;
+        }
+        
+        .skip-to-content:focus {
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            height: auto;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Breadcrumb styling */
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+        }
+        
+        .breadcrumb-item + .breadcrumb-item::before {
+            color: white;
+        }
+        
+        /* Value proposition cards */
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(6, 163, 218, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover .value-icon {
+            background: var(--primary);
+            transform: rotateY(360deg);
+        }
+        
+        .value-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover .value-icon i {
+            color: white;
+        }
+    </style>
+    
+    <!-- Structured Data for Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Luminous X (Pty) Ltd",
+        "url": "https://www.luminousx.co.za",
+        "logo": "https://www.luminousx.co.za/img/logo.png",
+        "foundingDate": "2016",
+        "foundingLocation": "Mmabatho, South Africa",
+        "description": "Trusted IT solutions provider dedicated to helping businesses embrace digital transformation",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1362 TshekoMoloko Street, Montshioa",
+            "addressLocality": "Mmabatho",
+            "addressRegion": "North West",
+            "postalCode": "2735",
+            "addressCountry": "ZA"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+27732529507",
+            "contactType": "customer service",
+            "email": "info@luminousx.co.za"
+        },
+        "sameAs": [
+            "https://twitter.com/luminousx",
+            "https://www.facebook.com/luminousx",
+            "https://www.linkedin.com/company/luminousx",
+            "https://www.instagram.com/luminousx"
+        ]
+    }
+    </script>
 </head>
 
 <body>
+    <!-- Skip to Content Link for Accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner"></div>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center" role="status" aria-label="Loading">
+        <div class="spinner" aria-hidden="true"></div>
+        <span class="visually-hidden">Loading...</span>
     </div>
     <!-- Spinner End -->
 
-
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
+    <div class="container-fluid bg-dark px-5 d-none d-lg-block" role="complementary" aria-label="Contact information bar">
         <div class="row gx-0">
             <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>1362 TshekoMoloko Street, Montshioa, Mmabatho, 2735</small>
-                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>073 252 9507</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@luminousx.co.za</small>
+                    <small class="me-3 text-light">
+                        <i class="fa fa-map-marker-alt me-2" aria-hidden="true"></i>
+                        <span>1362 TshekoMoloko Street, Montshioa, Mmabatho, 2735</span>
+                    </small>
+                    <small class="me-3 text-light">
+                        <i class="fa fa-phone-alt me-2" aria-hidden="true"></i>
+                        <a href="tel:+27732529507" class="text-light text-decoration-none">073 252 9507</a>
+                    </small>
+                    <small class="text-light">
+                        <i class="fa fa-envelope-open me-2" aria-hidden="true"></i>
+                        <a href="mailto:info@luminousx.co.za" class="text-light text-decoration-none">info@luminousx.co.za</a>
+                    </small>
                 </div>
             </div>
             <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
+                <div class="d-inline-flex align-items-center" style="height: 45px;" role="list" aria-label="Social media links">
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="#" aria-label="Follow us on Twitter" rel="noopener noreferrer">
+                        <i class="fab fa-twitter fw-normal" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="#" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+                        <i class="fab fa-facebook-f fw-normal" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="#" aria-label="Connect on LinkedIn" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin-in fw-normal" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href="#" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+                        <i class="fab fa-instagram fw-normal" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href="#" aria-label="Subscribe on YouTube" rel="noopener noreferrer">
+                        <i class="fab fa-youtube fw-normal" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Topbar End -->
 
-
     <!-- Navbar Start -->
     <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0" aria-label="Main navigation">
             <a href="index.html" class="navbar-brand p-0">
-<h1 class="m-0"><i class="fa fa-lightbulb me-2"></i>Luminous X</h1>
-</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
+                <h1 class="m-0">
+                    <i class="fa fa-lightbulb me-2" aria-hidden="true"></i>
+                    <span>Luminous X</span>
+                </h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars" aria-hidden="true"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="about.html" class="nav-item nav-link active">About</a>
-                    <a href="service.html" class="nav-item nav-link">Services</a>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <div class="navbar-nav ms-auto py-0" role="list">
+                    <a href="index.html" class="nav-item nav-link" role="listitem">Home</a>
+                    <a href="about.html" class="nav-item nav-link active" aria-current="page" role="listitem">About</a>
+                    <a href="service.html" class="nav-item nav-link" role="listitem">Services</a>
+                    <a href="contact.html" class="nav-item nav-link" role="listitem">Contact</a>
                 </div>
-                <a href="tel:+27732529507" class="btn btn-primary py-2 px-4 ms-3">Call Us Now</a>
+                <a href="tel:+27732529507" class="btn btn-primary py-2 px-4 ms-3" aria-label="Call us now">
+                    <i class="fa fa-phone-alt me-2" aria-hidden="true"></i>Call Us Now
+                </a>
             </div>
         </nav>
 
+        <!-- Page Header -->
         <div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px;">
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h1 class="display-4 text-white animated zoomIn">About Us</h1>
-                    <a href="" class="h5 text-white">Home</a>
-                    <i class="far fa-circle text-white px-2"></i>
-                    <a href="" class="h5 text-white">About</a>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item">
+                                <a href="index.html" class="h5 text-white">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <i class="far fa-circle text-white px-2" aria-hidden="true"></i>
+                                <span class="h5 text-white" aria-current="page">About</span>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
     </div>
     <!-- Navbar End -->
 
-
-    <!-- Full Screen Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex align-items-center justify-content-center">
-                    <div class="input-group" style="max-width: 600px;">
-                        <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
-                        <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Full Screen Search End -->
-
-
-<!-- About Start -->
-<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-lg-7">
-                <div class="section-title position-relative pb-3 mb-5">
-                    <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
-                    <h1 class="mb-0">Transforming Ideas into Powerful Digital Solutions</h1>
-                </div>
-                <p class="mb-4">
-                    We are more than an IT company — we are problem-solvers, innovators, and partners in progress. 
-                    From startups with bold visions to enterprises with complex challenges, we craft digital solutions 
-                    that accelerate growth and build resilience. Our journey began with a simple belief: technology 
-                    should empower people, not complicate their lives.
-                </p>
-                <div class="row g-0 mb-3">
-                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
-                        <h5 class="mb-3"><i class="fa fa-lightbulb text-primary me-3"></i>Innovation-Driven</h5>
-                        <h5 class="mb-3"><i class="fa fa-users text-primary me-3"></i>Client-Centered</h5>
-                    </div>
-                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
-                        <h5 class="mb-3"><i class="fa fa-shield-alt text-primary me-3"></i>Secure by Design</h5>
-                        <h5 class="mb-3"><i class="fa fa-globe-africa text-primary me-3"></i>Locally Rooted, Globally Minded</h5>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
-                    <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
-                        <i class="fa fa-phone-alt text-white"></i>
-                    </div>
-                    <div class="ps-4">
-                        <h5 class="mb-2">Call to ask any question</h5>
-                        <h4 class="text-primary mb-0">073 252 9507</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5" style="min-height: 500px;">
-                <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" src="img/about.jpg" style="object-fit: cover;">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- About End -->
-
-	
-	<!-- Mission, Vision & Values Start -->
-<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-            <h5 class="fw-bold text-primary text-uppercase">Who We Are</h5>
-            <h1 class="mb-0">Our Mission, Vision & Core Values</h1>
-        </div>
-        <div class="row g-5">
-            <!-- Mission -->
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-bullseye text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Our Mission</h4>
-                    <p class="m-0">
-                        To empower businesses and public institutions with innovative IT solutions that drive growth, efficiency, and lasting impact in South Africa and beyond.
-                    </p>
-                </div>
-            </div>
-            <!-- Vision -->
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-eye text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Our Vision</h4>
-                    <p class="m-0">
-                        To be a trusted leader in digital transformation, recognized for creating secure, future-ready, and socially impactful IT ecosystems.
-                    </p>
-                </div>
-            </div>
-            <!-- Values -->
-            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="service-icon">
-                        <i class="fa fa-handshake text-white"></i>
-                    </div>
-                    <h4 class="mb-3">Our Values</h4>
-                    <p class="m-0">
-                        Integrity, innovation, collaboration, and inclusivity form the foundation of everything we do, ensuring technology serves people first.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Mission, Vision & Values End -->
-
-
-
-  <!-- Why choose us Start -->
-<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-            <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
-            <h1 class="mb-0">Your Trusted Partner for Reliable IT Solutions</h1>
-        </div>
-        <div class="row g-5">
-            <div class="col-lg-4">
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- About Start -->
+        <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container py-5">
                 <div class="row g-5">
-                    <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
-                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                            <i class="fa fa-server text-white"></i>
+                    <div class="col-lg-7">
+                        <div class="section-title position-relative pb-3 mb-5">
+                            <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
+                            <h2 class="mb-0">Transforming Ideas into Powerful Digital Solutions</h2>
                         </div>
-                        <h4>Cutting-Edge Technology</h4>
-                        <p class="mb-0">We implement modern IT solutions such as cloud computing, networking, and cybersecurity to keep your business ahead of the curve.</p>
+                        <p class="mb-4">
+                            We are more than an IT company — we are problem-solvers, innovators, and partners in progress. 
+                            From startups with bold visions to enterprises with complex challenges, we craft digital solutions 
+                            that accelerate growth and build resilience. Our journey began with a simple belief: technology 
+                            should empower people, not complicate their lives.
+                        </p>
+                        <div class="row g-0 mb-3">
+                            <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                                <h5 class="mb-3">
+                                    <i class="fa fa-lightbulb text-primary me-3" aria-hidden="true"></i>
+                                    Innovation-Driven
+                                </h5>
+                                <h5 class="mb-3">
+                                    <i class="fa fa-users text-primary me-3" aria-hidden="true"></i>
+                                    Client-Centered
+                                </h5>
+                            </div>
+                            <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                                <h5 class="mb-3">
+                                    <i class="fa fa-shield-alt text-primary me-3" aria-hidden="true"></i>
+                                    Secure by Design
+                                </h5>
+                                <h5 class="mb-3">
+                                    <i class="fa fa-globe-africa text-primary me-3" aria-hidden="true"></i>
+                                    Locally Rooted, Globally Minded
+                                </h5>
+                            </div>
+                        </div>
+                        
+                        <!-- Company Stats -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-4">
+                                <div class="counter-box text-center">
+                                    <div class="stat-counter text-primary" data-toggle="counter-up">8</div>
+                                    <p class="mb-0 text-muted">Years Experience</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="counter-box text-center">
+                                    <div class="stat-counter text-primary" data-toggle="counter-up">100</div>
+                                    <p class="mb-0 text-muted">Projects Completed</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="counter-box text-center">
+                                    <div class="stat-counter text-primary" data-toggle="counter-up">50</div>
+                                    <p class="mb-0 text-muted">Happy Clients</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
+                            <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                                <i class="fa fa-phone-alt text-white" aria-hidden="true"></i>
+                            </div>
+                            <div class="ps-4">
+                                <h5 class="mb-2">Call to ask any question</h5>
+                                <h4 class="text-primary mb-0">
+                                    <a href="tel:+27732529507" class="text-primary text-decoration-none">073 252 9507</a>
+                                </h4>
+                            </div>
+                        </div>
+                        <a href="contact.html" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">
+                            Get in Touch <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
                     </div>
-                    <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
-                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                            <i class="fa fa-shield-alt text-white"></i>
+                    <div class="col-lg-5" style="min-height: 500px;">
+                        <div class="position-relative h-100">
+                            <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" 
+                                 src="img/about.jpg" alt="Luminous X team working on innovative IT solutions" 
+                                 loading="lazy" style="object-fit: cover;">
                         </div>
-                        <h4>Secure & Reliable</h4>
-                        <p class="mb-0">Our solutions are built with security and reliability at their core, ensuring your data and operations remain protected 24/7.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
-                <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s" src="img/feature.jpg" style="object-fit: cover;">
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="row g-5">
-                    <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
-                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                            <i class="fa fa-user-tie text-white"></i>
-                        </div>
-                        <h4>Expert Team</h4>
-                        <p class="mb-0">Our experienced IT professionals bring deep expertise and a customer-first approach to every project we deliver.</p>
-                    </div>
-                    <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
-                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                            <i class="fa fa-headset text-white"></i>
-                        </div>
-                        <h4>Great Support</h4>
-                        <p class="mb-0">We provide professional technical support, ensuring your systems run smoothly and downtime is minimized.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Why choose us End -->
+        <!-- About End -->
 
+        <!-- Our Journey Timeline -->
+        <div class="container-fluid py-5 wow fadeInUp bg-light" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                    <h5 class="fw-bold text-primary text-uppercase">Our Journey</h5>
+                    <h2 class="mb-0">The Story of Luminous X</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-badge">
+                            <i class="fa fa-flag-checkered" aria-hidden="true"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="text-primary">2016</h4>
+                            <h5>Foundation Laid</h5>
+                            <p>Luminous X was founded with a vision to provide innovative IT solutions to businesses in South Africa.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-badge">
+                            <i class="fa fa-building" aria-hidden="true"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="text-primary">2018</h4>
+                            <h5>Official Registration</h5>
+                            <p>Luminous X (Pty) Ltd was formally registered, marking our commitment to professional IT services.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-badge">
+                            <i class="fa fa-chart-line" aria-hidden="true"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="text-primary">2020</h4>
+                            <h5>Expansion & Growth</h5>
+                            <p>Expanded service offerings and client base across multiple sectors including government and private enterprises.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-badge">
+                            <i class="fa fa-rocket" aria-hidden="true"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4 class="text-primary">2024</h4>
+                            <h5>Future Forward</h5>
+                            <p>Continuing to innovate and lead in digital transformation across South Africa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    
+        <!-- Mission, Vision & Values Start -->
+        <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                    <h5 class="fw-bold text-primary text-uppercase">Who We Are</h5>
+                    <h2 class="mb-0">Our Mission, Vision & Core Values</h2>
+                </div>
+                <div class="row g-5">
+                    <!-- Mission -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Our Mission</h3>
+                            <p class="mb-0">
+                                To empower businesses and public institutions with innovative IT solutions that drive growth, efficiency, and lasting impact in South Africa and beyond.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Vision -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Our Vision</h3>
+                            <p class="mb-0">
+                                To be a trusted leader in digital transformation, recognized for creating secure, future-ready, and socially impactful IT ecosystems.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Values -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fa fa-handshake" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Our Values</h3>
+                            <p class="mb-0">
+                                Integrity, innovation, collaboration, and inclusivity form the foundation of everything we do, ensuring technology serves people first.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mission, Vision & Values End -->
 
- <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+        <!-- Why Choose Us Start -->
+        <div class="container-fluid py-5 wow fadeInUp bg-light" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                    <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
+                    <h2 class="mb-0">Your Trusted Partner for Reliable IT Solutions</h2>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-4">
+                        <div class="row g-5">
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-server text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="h4">Cutting-Edge Technology</h3>
+                                <p class="mb-0">We implement modern IT solutions such as cloud computing, networking, and cybersecurity to keep your business ahead of the curve.</p>
+                            </div>
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-shield-alt text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="h4">Secure & Reliable</h3>
+                                <p class="mb-0">Our solutions are built with security and reliability at their core, ensuring your data and operations remain protected 24/7.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+                        <div class="position-relative h-100">
+                            <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s" 
+                                 src="img/feature.jpg" alt="Luminous X team collaboration" 
+                                 loading="lazy" style="object-fit: cover;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row g-5">
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-user-tie text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="h4">Expert Team</h3>
+                                <p class="mb-0">Our experienced IT professionals bring deep expertise and a customer-first approach to every project we deliver.</p>
+                            </div>
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-headset text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="h4">Great Support</h3>
+                                <p class="mb-0">We provide professional technical support, ensuring your systems run smoothly and downtime is minimized.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Why Choose Us End -->
+
+        <!-- CTA Section -->
+        <div class="container-fluid cta-section py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0">
+                        <h2 class="text-white mb-3">Ready to Transform Your Business?</h2>
+                        <p class="text-white mb-0 opacity-90">Let's discuss how our IT solutions can help you achieve your business goals.</p>
+                    </div>
+                    <div class="col-lg-4 text-center text-lg-end">
+                        <a href="contact.html" class="btn btn-light btn-lg py-3 px-5 animated zoomIn">
+                            Get Started <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Start -->
+    <footer class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s" role="contentinfo">
         <div class="container">
             <div class="row gx-5">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
                         <a href="index.html" class="navbar-brand">
-                                <img src="img/logo-white.png" alt="Luminous X Logo" class="logo" style="height: 100px;">
+                            <img src="img/logo-white.png" alt="Luminous X Logo" class="logo" style="height: 100px;" loading="lazy">
                         </a>
                         <p class="mt-3 mb-4">Founded in 2016 and formally registered in 2018, Luminous X (Pty) Ltd is a trusted IT solutions provider dedicated to helping businesses embrace digital transformation.</p>
+                        <div class="d-flex">
+                            <a class="btn btn-outline-light btn-square me-2" href="#" aria-label="Follow us on Twitter">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-outline-light btn-square me-2" href="#" aria-label="Follow us on Facebook">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-outline-light btn-square me-2" href="#" aria-label="Connect on LinkedIn">
+                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-outline-light btn-square" href="#" aria-label="Follow us on Instagram">
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-6">
@@ -289,83 +736,156 @@
                                 <h3 class="text-light mb-0">Get In Touch</h3>
                             </div>
                             <div class="d-flex mb-2">
-                                <i class="bi bi-geo-alt text-primary me-2"></i>
+                                <i class="bi bi-geo-alt text-primary me-2" aria-hidden="true"></i>
                                 <p class="mb-0">1362 TshekoMoloko Street, Montshioa, Mmabatho, 2735</p>
                             </div>
                             <div class="d-flex mb-2">
-                                <i class="bi bi-envelope-open text-primary me-2"></i>
-                                <p class="mb-0">info@luminousx.co.za</p>
+                                <i class="bi bi-envelope-open text-primary me-2" aria-hidden="true"></i>
+                                <a href="mailto:info@luminousx.co.za" class="text-light text-decoration-none">info@luminousx.co.za</a>
                             </div>
                             <div class="d-flex mb-2">
-                                <i class="bi bi-telephone text-primary me-2"></i>
-                                <p class="mb-0">073 252 9507</p>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
-                                <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                                <i class="bi bi-telephone text-primary me-2" aria-hidden="true"></i>
+                                <a href="tel:+27732529507" class="text-light text-decoration-none">073 252 9507</a>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
                             <div class="section-title section-title-sm position-relative pb-3 mb-4">
                                 <h3 class="text-light mb-0">Quick Links</h3>
                             </div>
-                            <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="index.html"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
-                                <a class="text-light mb-2" href="about.html"><i class="bi bi-arrow-right text-primary me-2"></i>About Us</a>
-                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>Our Services</a>
-                                <a class="text-light" href="contact.html"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Us</a>
+                            <div class="link-animated d-flex flex-column justify-content-start" role="list">
+                                <a class="text-light mb-2" href="index.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Home
+                                </a>
+                                <a class="text-light mb-2" href="about.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>About Us
+                                </a>
+                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Our Services
+                                </a>
+                                <a class="text-light" href="contact.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Contact Us
+                                </a>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
                             <div class="section-title section-title-sm position-relative pb-3 mb-4">
                                 <h3 class="text-light mb-0">Our Services</h3>
                             </div>
-                            <div class="link-animated d-flex flex-column justify-content-start">
-                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>Cybersecurity</a>
-                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>Cloud Solutions</a>
-                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>Networking</a>
-                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>Software Development</a>
-                                <a class="text-light mb-2" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>IT Infrastructure</a>
-                                <a class="text-light" href="service.html"><i class="bi bi-arrow-right text-primary me-2"></i>Managed IT Services</a>
+                            <div class="link-animated d-flex flex-column justify-content-start" role="list">
+                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Cybersecurity
+                                </a>
+                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Cloud Solutions
+                                </a>
+                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Networking
+                                </a>
+                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Software Development
+                                </a>
+                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>IT Infrastructure
+                                </a>
+                                <a class="text-light" href="service.html" role="listitem">
+                                    <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Managed IT Services
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid text-white" style="background: #061429;">
-        <div class="container text-center">
-            <div class="row justify-content-end">
-                <div class="col-lg-8 col-md-6">
-                    <div class="d-flex align-items-center justify-content-center" style="height: 75px;">
-                        <p class="mb-0">&copy; <a class="text-white border-bottom" href="#">Luminous X</a>. All Rights Reserved. 
-						
+        <div class="container-fluid text-white" style="background: #061429;">
+            <div class="container text-center">
+                <div class="row justify-content-end">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="d-flex align-items-center justify-content-center" style="min-height: 75px;">
+                            <p class="mb-0">
+                                &copy; <span id="currentYear"></span> <a class="text-white border-bottom" href="#">Luminous X</a>. All Rights Reserved.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
     <!-- Footer End -->
 
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+    <!-- Back to Top Button -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top" aria-label="Back to top" role="button">
+        <i class="bi bi-arrow-up" aria-hidden="true"></i>
+    </a>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="lib/wow/wow.min.js" defer></script>
+    <script src="lib/easing/easing.min.js" defer></script>
+    <script src="lib/waypoints/waypoints.min.js" defer></script>
+    <script src="lib/counterup/counterup.min.js" defer></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js" defer></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
+    
+    <!-- About Page JavaScript -->
+    <script>
+        // Dynamic copyright year
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('currentYear');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+            
+            // Initialize WOW.js with reduced motion check
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion && typeof WOW !== 'undefined') {
+                new WOW().init();
+            }
+            
+            // Initialize counter up
+            if (typeof $.fn.counterUp !== 'undefined') {
+                $('[data-toggle="counter-up"]').counterUp({
+                    delay: 10,
+                    time: 2000
+                });
+            }
+            
+            // Add smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Add fade-in animation for statistics on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.counter-box').forEach(box => {
+                observer.observe(box);
+            });
+        });
+    </script>
 </body>
 
 </html>
