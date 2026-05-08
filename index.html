@@ -43,9 +43,18 @@
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
     
+    <!-- Security Headers via Meta Tags -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
     <!-- Preconnect to Google Fonts for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <!-- Google Web Fonts with Display Swap -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -74,9 +83,17 @@
         /* Critical CSS for initial render */
         :root {
             --primary: #06A3DA;
+            --primary-dark: #0588b8;
             --secondary: #34AD54;
             --light: #EEF9FF;
             --dark: #091E3E;
+            --dark-light: #122f5c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
@@ -84,6 +101,29 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+        }
+        
+        /* Skip to content link for accessibility */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            z-index: 9999;
+        }
+        
+        .skip-to-content:focus {
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            height: auto;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0 0 8px 8px;
         }
         
         #spinner {
@@ -107,6 +147,30 @@
         
         img.loaded {
             opacity: 1;
+        }
+        
+        /* Loading animation for async content */
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
     
@@ -134,7 +198,33 @@
         "telephone": "+27732529507",
         "email": "info@luminousx.co.za",
         "openingHours": "Mo-Fr 08:00-17:00",
-        "priceRange": "$$"
+        "priceRange": "$$",
+        "sameAs": [
+            "https://twitter.com/luminousx",
+            "https://www.facebook.com/luminousx",
+            "https://www.linkedin.com/company/luminousx",
+            "https://www.instagram.com/luminousx"
+        ]
+    }
+    </script>
+    
+    <!-- WebPage Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Luminous X - IT Solutions Provider",
+        "description": "Professional IT services including cybersecurity, cloud computing, and managed IT support.",
+        "url": "https://www.luminousx.co.za",
+        "dateModified": "2024-01-01",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Luminous X (Pty) Ltd",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.luminousx.co.za/img/logo.png"
+            }
+        }
     }
     </script>
     
@@ -146,33 +236,46 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-XXXXX-X');
+        
+        // Track outbound links
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a[href^="http"]:not([href*="luminousx.co.za"])').forEach(link => {
+                link.addEventListener('click', function() {
+                    gtag('event', 'click', {
+                        'event_category': 'outbound',
+                        'event_label': this.href
+                    });
+                });
+            });
+        });
     </script>
     -->
     
-    <!-- Cookie Consent Banner (Optional) -->
-    <!-- 
+    <!-- Cookie Consent Banner -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js" defer></script>
+    
+    <!-- Live Chat Integration (Optional - Add your widget code) -->
+    <!-- 
     <script>
-        window.addEventListener("load", function(){
-            window.cookieconsent.initialise({
-                "palette": {
-                    "popup": { "background": "#091E3E" },
-                    "button": { "background": "#06A3DA" }
-                },
-                "theme": "classic",
-                "content": {
-                    "message": "This website uses cookies to ensure you get the best experience.",
-                    "dismiss": "Got it!",
-                    "link": "Learn more"
-                }
-            });
-        });
+        (function(d, w, c) {
+            w.ChatraID = 'YOUR_CHATRA_ID';
+            var s = d.createElement('script');
+            w[c] = w[c] || function() {
+                (w[c].q = w[c].q || []).push(arguments);
+            };
+            s.async = true;
+            s.src = 'https://call.chatra.io/chatra.js';
+            if (d.head) d.head.appendChild(s);
+        })(document, window, 'Chatra');
     </script>
     -->
 </head>
 
 <body>
+    <!-- Skip to Content Link for Accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
     <!-- ============================================
          SPINNER COMPONENT
          Loading spinner shown during page load
@@ -268,7 +371,7 @@
             <div class="carousel-inner">
                 <!-- First Slide -->
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/carousel-1.jpg" alt="Luminous X IT Solutions Hero Image" loading="eager" width="1920" height="800">
+                    <img class="w-100" src="img/carousel-1.jpg" alt="Luminous X IT Solutions Hero Image" loading="eager" width="1920" height="800" fetchpriority="high">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Trusted IT Partner</h5>
@@ -308,294 +411,352 @@
         </div>
     </div>
 
-    <!-- ============================================
-         ABOUT SECTION
-         Company introduction and value proposition
-         ============================================ -->
-    <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="About Us section">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-7">
-                    <div class="section-title position-relative pb-3 mb-5">
-                        <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
-                        <h2 class="mb-0">Driving Innovation Through Cutting-Edge IT Solutions</h2>
-                    </div>
-                    <p class="mb-4">
-                        Founded in 2016 and formally registered in 2018, <strong>Luminous X (Pty) Ltd</strong> is a trusted IT solutions provider dedicated to helping businesses embrace digital transformation. We specialize in delivering secure, scalable, and innovative technology services that streamline operations, improve efficiency, and empower organizations to achieve sustainable growth.
-                    </p>
-                    <div class="row g-0 mb-3">
-                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
-                            <h5 class="mb-3">
-                                <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
-                                Trusted Expertise
-                            </h5>
-                            <h5 class="mb-3">
-                                <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
-                                Skilled Professionals
-                            </h5>
+    <!-- Main Content Wrapper -->
+    <main id="main-content">
+        <!-- ============================================
+             ABOUT SECTION
+             Company introduction and value proposition
+             ============================================ -->
+        <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="About Us section">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-7">
+                        <div class="section-title position-relative pb-3 mb-5">
+                            <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
+                            <h2 class="mb-0">Driving Innovation Through Cutting-Edge IT Solutions</h2>
                         </div>
-                        <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
-                            <h5 class="mb-3">
-                                <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
-                                Reliable Support
-                            </h5>
-                            <h5 class="mb-3">
-                                <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
-                                Value-Driven Pricing
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
-                        <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
-                            <i class="fa fa-phone-alt text-white" aria-hidden="true"></i>
-                        </div>
-                        <div class="ps-4">
-                            <h5 class="mb-2">Call to ask any question</h5>
-                            <h4 class="text-primary mb-0">
-                                <a href="tel:+27732529507" class="text-primary text-decoration-none">073 252 9507</a>
-                            </h4>
-                        </div>
-                    </div>
-                    <a href="service.html" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">Our Services</a>
-                </div>
-                <div class="col-lg-5" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" 
-                             src="img/about.jpg" alt="Luminous X Team working on IT solutions" 
-                             loading="lazy" style="object-fit: cover;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================
-         WHY CHOOSE US SECTION
-         Key differentiators and benefits
-         ============================================ -->
-    <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="Why choose us section">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
-                <h2 class="mb-0">Your Trusted Partner for Reliable IT Solutions</h2>
-            </div>
-            <div class="row g-5">
-                <div class="col-lg-4">
-                    <div class="row g-5">
-                        <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
-                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <i class="fa fa-server text-white" aria-hidden="true"></i>
+                        <p class="mb-4">
+                            Founded in 2016 and formally registered in 2018, <strong>Luminous X (Pty) Ltd</strong> is a trusted IT solutions provider dedicated to helping businesses embrace digital transformation. We specialize in delivering secure, scalable, and innovative technology services that streamline operations, improve efficiency, and empower organizations to achieve sustainable growth.
+                        </p>
+                        <div class="row g-0 mb-3">
+                            <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                                <h5 class="mb-3">
+                                    <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
+                                    Trusted Expertise
+                                </h5>
+                                <h5 class="mb-3">
+                                    <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
+                                    Skilled Professionals
+                                </h5>
                             </div>
-                            <h3>Cutting-Edge Technology</h3>
-                            <p class="mb-0">We implement modern IT solutions such as cloud computing, networking, and cybersecurity to keep your business ahead of the curve.</p>
+                            <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                                <h5 class="mb-3">
+                                    <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
+                                    Reliable Support
+                                </h5>
+                                <h5 class="mb-3">
+                                    <i class="fa fa-check text-primary me-3" aria-hidden="true"></i>
+                                    Value-Driven Pricing
+                                </h5>
+                            </div>
                         </div>
-                        <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
-                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
+                            <div class="bg-primary d-flex align-items-center justify-content-center rounded" style="width: 60px; height: 60px;">
+                                <i class="fa fa-phone-alt text-white" aria-hidden="true"></i>
+                            </div>
+                            <div class="ps-4">
+                                <h5 class="mb-2">Call to ask any question</h5>
+                                <h4 class="text-primary mb-0">
+                                    <a href="tel:+27732529507" class="text-primary text-decoration-none">073 252 9507</a>
+                                </h4>
+                            </div>
+                        </div>
+                        <a href="service.html" class="btn btn-primary py-3 px-5 mt-3 wow zoomIn" data-wow-delay="0.9s">Our Services</a>
+                    </div>
+                    <div class="col-lg-5" style="min-height: 500px;">
+                        <div class="position-relative h-100">
+                            <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.9s" 
+                                 src="img/about.jpg" alt="Luminous X Team working on IT solutions" 
+                                 loading="lazy" style="object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             WHY CHOOSE US SECTION
+             Key differentiators and benefits
+             ============================================ -->
+        <section class="container-fluid py-5 wow fadeInUp bg-light" data-wow-delay="0.1s" aria-label="Why choose us section">
+            <div class="container py-5">
+                <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                    <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
+                    <h2 class="mb-0">Your Trusted Partner for Reliable IT Solutions</h2>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-4">
+                        <div class="row g-5">
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-server text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3>Cutting-Edge Technology</h3>
+                                <p class="mb-0">We implement modern IT solutions such as cloud computing, networking, and cybersecurity to keep your business ahead of the curve.</p>
+                            </div>
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-shield-alt text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3>Secure & Reliable</h3>
+                                <p class="mb-0">Our solutions are built with security and reliability at their core, ensuring your data and operations remain protected 24/7.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+                        <div class="position-relative h-100">
+                            <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s" 
+                                 src="img/feature.jpg" alt="IT Solutions Feature Image" 
+                                 loading="lazy" style="object-fit: cover;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="row g-5">
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-user-tie text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3>Expert Team</h3>
+                                <p class="mb-0">Our experienced IT professionals bring deep expertise and a customer-first approach to every project we deliver.</p>
+                            </div>
+                            <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+                                <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                    <i class="fa fa-headset text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3>Great Support</h3>
+                                <p class="mb-0">We provide professional technical support, ensuring your systems run smoothly and downtime is minimized.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SERVICES SECTION
+             Core services offered by the company
+             ============================================ -->
+        <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="Our services section">
+            <div class="container py-5">
+                <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                    <h5 class="fw-bold text-primary text-uppercase">Our Services</h5>
+                    <h2 class="mb-0">Comprehensive IT Solutions Tailored for Your Business</h2>
+                </div>
+                <div class="row g-5">
+                    <!-- Service 1: Cybersecurity -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
+                            <div class="service-icon">
                                 <i class="fa fa-shield-alt text-white" aria-hidden="true"></i>
                             </div>
-                            <h3>Secure & Reliable</h3>
-                            <p class="mb-0">Our solutions are built with security and reliability at their core, ensuring your data and operations remain protected 24/7.</p>
+                            <h3 class="mb-3 h4">Cybersecurity Services</h3>
+                            <p class="m-0">Protecting your business with advanced security solutions, including threat monitoring, compliance, and data protection.</p>
+                            <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Cybersecurity Services">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                <span class="visually-hidden">Learn more</span>
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s" 
-                             src="img/feature.jpg" alt="IT Solutions Feature Image" 
-                             loading="lazy" style="object-fit: cover;">
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="row g-5">
-                        <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
-                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <i class="fa fa-user-tie text-white" aria-hidden="true"></i>
+                    
+                    <!-- Service 2: Cloud Solutions -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
+                            <div class="service-icon">
+                                <i class="fa fa-cloud text-white" aria-hidden="true"></i>
                             </div>
-                            <h3>Expert Team</h3>
-                            <p class="mb-0">Our experienced IT professionals bring deep expertise and a customer-first approach to every project we deliver.</p>
+                            <h3 class="mb-3 h4">Cloud Solutions</h3>
+                            <p class="m-0">Design, migration, and management of secure cloud platforms to enable flexibility, scalability, and cost efficiency.</p>
+                            <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Cloud Solutions">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                <span class="visually-hidden">Learn more</span>
+                            </a>
                         </div>
-                        <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
-                            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    </div>
+                    
+                    <!-- Service 3: Networking -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
+                            <div class="service-icon">
+                                <i class="fa fa-network-wired text-white" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="mb-3 h4">Networking & Connectivity</h3>
+                            <p class="m-0">End-to-end LAN, WAN, and wireless network solutions that ensure your business stays connected at all times.</p>
+                            <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Networking Services">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                <span class="visually-hidden">Learn more</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 4: Software Development -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
+                            <div class="service-icon">
+                                <i class="fa fa-laptop-code text-white" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="mb-3 h4">Software & App Development</h3>
+                            <p class="m-0">Custom web and mobile applications designed to meet client-specific needs and streamline business processes.</p>
+                            <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Software Development">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                <span class="visually-hidden">Learn more</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 5: IT Infrastructure -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
+                            <div class="service-icon">
+                                <i class="fa fa-server text-white" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="mb-3 h4">IT Infrastructure</h3>
+                            <p class="m-0">Supply, installation, and maintenance of servers, storage, and enterprise-grade IT systems for public and private sectors.</p>
+                            <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about IT Infrastructure">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                <span class="visually-hidden">Learn more</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 6: Managed IT Services -->
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                        <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
+                            <div class="service-icon">
                                 <i class="fa fa-headset text-white" aria-hidden="true"></i>
                             </div>
-                            <h3>Great Support</h3>
-                            <p class="mb-0">We provide professional technical support, ensuring your systems run smoothly and downtime is minimized.</p>
+                            <h3 class="mb-3 h4">Managed IT Services</h3>
+                            <p class="m-0">Proactive monitoring, maintenance, and support to ensure your IT systems perform at their best around the clock.</p>
+                            <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Managed IT Services">
+                                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                <span class="visually-hidden">Learn more</span>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ============================================
-         SERVICES SECTION
-         Core services offered by the company
-         ============================================ -->
-    <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="Our services section">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">Our Services</h5>
-                <h2 class="mb-0">Comprehensive IT Solutions Tailored for Your Business</h2>
-            </div>
-            <div class="row g-5">
-                <!-- Service 1: Cybersecurity -->
-                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
-                        <div class="service-icon">
-                            <i class="fa fa-shield-alt text-white" aria-hidden="true"></i>
+        <!-- ============================================
+             STATISTICS SECTION
+             Key company metrics
+             ============================================ -->
+        <section class="container-fluid py-5 wow fadeInUp bg-primary" data-wow-delay="0.1s" aria-label="Company statistics">
+            <div class="container py-5">
+                <div class="row g-4 text-center">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="text-white">
+                            <div class="display-1 fw-bold" data-toggle="counter-up">8</div>
+                            <p class="h5 mb-0">Years of Excellence</p>
                         </div>
-                        <h3 class="mb-3 h4">Cybersecurity Services</h3>
-                        <p class="m-0">Protecting your business with advanced security solutions, including threat monitoring, compliance, and data protection.</p>
-                        <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Cybersecurity Services">
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Learn more</span>
-                        </a>
                     </div>
-                </div>
-                
-                <!-- Service 2: Cloud Solutions -->
-                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
-                        <div class="service-icon">
-                            <i class="fa fa-cloud text-white" aria-hidden="true"></i>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="text-white">
+                            <div class="display-1 fw-bold" data-toggle="counter-up">100</div>
+                            <p class="h5 mb-0">Projects Completed</p>
                         </div>
-                        <h3 class="mb-3 h4">Cloud Solutions</h3>
-                        <p class="m-0">Design, migration, and management of secure cloud platforms to enable flexibility, scalability, and cost efficiency.</p>
-                        <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Cloud Solutions">
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Learn more</span>
-                        </a>
                     </div>
-                </div>
-                
-                <!-- Service 3: Networking -->
-                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
-                        <div class="service-icon">
-                            <i class="fa fa-network-wired text-white" aria-hidden="true"></i>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="text-white">
+                            <div class="display-1 fw-bold" data-toggle="counter-up">50</div>
+                            <p class="h5 mb-0">Happy Clients</p>
                         </div>
-                        <h3 class="mb-3 h4">Networking & Connectivity</h3>
-                        <p class="m-0">End-to-end LAN, WAN, and wireless network solutions that ensure your business stays connected at all times.</p>
-                        <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Networking Services">
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Learn more</span>
-                        </a>
                     </div>
-                </div>
-                
-                <!-- Service 4: Software Development -->
-                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
-                        <div class="service-icon">
-                            <i class="fa fa-laptop-code text-white" aria-hidden="true"></i>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="text-white">
+                            <div class="display-1 fw-bold" data-toggle="counter-up">24</div>
+                            <p class="h5 mb-0">/7 Support</p>
                         </div>
-                        <h3 class="mb-3 h4">Software & App Development</h3>
-                        <p class="m-0">Custom web and mobile applications designed to meet client-specific needs and streamline business processes.</p>
-                        <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Software Development">
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Learn more</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 5: IT Infrastructure -->
-                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
-                        <div class="service-icon">
-                            <i class="fa fa-server text-white" aria-hidden="true"></i>
-                        </div>
-                        <h3 class="mb-3 h4">IT Infrastructure</h3>
-                        <p class="m-0">Supply, installation, and maintenance of servers, storage, and enterprise-grade IT systems for public and private sectors.</p>
-                        <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about IT Infrastructure">
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Learn more</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 6: Managed IT Services -->
-                <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
-                    <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center h-100">
-                        <div class="service-icon">
-                            <i class="fa fa-headset text-white" aria-hidden="true"></i>
-                        </div>
-                        <h3 class="mb-3 h4">Managed IT Services</h3>
-                        <p class="m-0">Proactive monitoring, maintenance, and support to ensure your IT systems perform at their best around the clock.</p>
-                        <a class="btn btn-lg btn-primary rounded mt-3" href="service.html" aria-label="Learn more about Managed IT Services">
-                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Learn more</span>
-                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ============================================
-         TECH INSIGHTS SECTION
-         Educational content and industry facts
-         ============================================ -->
-    <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="Technology insights and facts">
-        <div class="container py-5">
-            <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">Tech Insights</h5>
-                <h2 class="mb-0">Empowering You with Knowledge for the Digital Age</h2>
+        <!-- ============================================
+             TECH INSIGHTS SECTION
+             Educational content and industry facts
+             ============================================ -->
+        <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="Technology insights and facts">
+            <div class="container py-5">
+                <div class="section-title text-center position-relative pb-3 mb-4 mx-auto" style="max-width: 600px;">
+                    <h5 class="fw-bold text-primary text-uppercase">Tech Insights</h5>
+                    <h2 class="mb-0">Empowering You with Knowledge for the Digital Age</h2>
+                </div>
+                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s" aria-label="Insights carousel">
+                    <!-- Insight 1: Cybersecurity -->
+                    <div class="testimonial-item bg-light my-4">
+                        <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                            <div class="ps-4">
+                                <h4 class="text-primary mb-1">Cybersecurity</h4>
+                                <small class="text-uppercase">Did You Know?</small>
+                            </div>
+                        </div>
+                        <div class="pt-4 pb-5 px-5">
+                            43% of cyberattacks target small and medium businesses. Proactive security measures can save your organization millions in downtime and data recovery.
+                        </div>
+                    </div>
+                    
+                    <!-- Insight 2: Cloud Computing -->
+                    <div class="testimonial-item bg-light my-4">
+                        <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                            <div class="ps-4">
+                                <h4 class="text-primary mb-1">Cloud Computing</h4>
+                                <small class="text-uppercase">Did You Know?</small>
+                            </div>
+                        </div>
+                        <div class="pt-4 pb-5 px-5">
+                            Over 90% of businesses in South Africa are adopting cloud services to improve agility and reduce costs. Cloud-first strategies are now critical for growth.
+                        </div>
+                    </div>
+                    
+                    <!-- Insight 3: Data Analytics -->
+                    <div class="testimonial-item bg-light my-4">
+                        <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                            <div class="ps-4">
+                                <h4 class="text-primary mb-1">Data Analytics</h4>
+                                <small class="text-uppercase">Insight</small>
+                            </div>
+                        </div>
+                        <div class="pt-4 pb-5 px-5">
+                            Organizations that use data-driven decision-making are 23 times more likely to acquire new customers and 19 times more likely to be profitable.
+                        </div>
+                    </div>
+                    
+                    <!-- Insight 4: IT Infrastructure -->
+                    <div class="testimonial-item bg-light my-4">
+                        <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
+                            <div class="ps-4">
+                                <h4 class="text-primary mb-1">IT Infrastructure</h4>
+                                <small class="text-uppercase">Fact</small>
+                            </div>
+                        </div>
+                        <div class="pt-4 pb-5 px-5">
+                            Reliable IT infrastructure reduces downtime by up to 85% and ensures seamless operations for public and private sector organizations.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.6s" aria-label="Insights carousel">
-                <!-- Insight 1: Cybersecurity -->
-                <div class="testimonial-item bg-light my-4">
-                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <div class="ps-4">
-                            <h4 class="text-primary mb-1">Cybersecurity</h4>
-                            <small class="text-uppercase">Did You Know?</small>
-                        </div>
+        </section>
+        
+        <!-- ============================================
+             CALL TO ACTION SECTION
+             Conversion-focused CTA banner
+             ============================================ -->
+        <section class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" aria-label="Call to action">
+            <div class="container py-5">
+                <div class="row bg-primary rounded-3 p-5 align-items-center">
+                    <div class="col-lg-8 text-center text-lg-start mb-4 mb-lg-0">
+                        <h2 class="text-white mb-3">Ready to Transform Your Business?</h2>
+                        <p class="text-white mb-0 opacity-90">Let's discuss how our IT solutions can help you achieve your business goals.</p>
                     </div>
-                    <div class="pt-4 pb-5 px-5">
-                        43% of cyberattacks target small and medium businesses. Proactive security measures can save your organization millions in downtime and data recovery.
-                    </div>
-                </div>
-                
-                <!-- Insight 2: Cloud Computing -->
-                <div class="testimonial-item bg-light my-4">
-                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <div class="ps-4">
-                            <h4 class="text-primary mb-1">Cloud Computing</h4>
-                            <small class="text-uppercase">Did You Know?</small>
-                        </div>
-                    </div>
-                    <div class="pt-4 pb-5 px-5">
-                        Over 90% of businesses in South Africa are adopting cloud services to improve agility and reduce costs. Cloud-first strategies are now critical for growth.
-                    </div>
-                </div>
-                
-                <!-- Insight 3: Data Analytics -->
-                <div class="testimonial-item bg-light my-4">
-                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <div class="ps-4">
-                            <h4 class="text-primary mb-1">Data Analytics</h4>
-                            <small class="text-uppercase">Insight</small>
-                        </div>
-                    </div>
-                    <div class="pt-4 pb-5 px-5">
-                        Organizations that use data-driven decision-making are 23 times more likely to acquire new customers and 19 times more likely to be profitable.
-                    </div>
-                </div>
-                
-                <!-- Insight 4: IT Infrastructure -->
-                <div class="testimonial-item bg-light my-4">
-                    <div class="d-flex align-items-center border-bottom pt-5 pb-4 px-5">
-                        <div class="ps-4">
-                            <h4 class="text-primary mb-1">IT Infrastructure</h4>
-                            <small class="text-uppercase">Fact</small>
-                        </div>
-                    </div>
-                    <div class="pt-4 pb-5 px-5">
-                        Reliable IT infrastructure reduces downtime by up to 85% and ensures seamless operations for public and private sector organizations.
+                    <div class="col-lg-4 text-center text-lg-end">
+                        <a href="contact.html" class="btn btn-light btn-lg py-3 px-5">
+                            Get Started <i class="bi bi-arrow-right ms-2" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- ============================================
          FOOTER SECTION
@@ -611,6 +772,10 @@
                             <img src="img/logo-white.png" alt="Luminous X Logo" class="logo" style="height: 100px;" loading="lazy">
                         </a>
                         <p class="mt-3 mb-4">Founded in 2016 and formally registered in 2018, Luminous X (Pty) Ltd is a trusted IT solutions provider dedicated to helping businesses embrace digital transformation.</p>
+                        <!-- Trust Badge -->
+                        <div class="mt-2">
+                            <img src="img/trust-badge.png" alt="Trusted IT Provider" height="40" loading="lazy">
+                        </div>
                     </div>
                 </div>
                 
@@ -677,22 +842,22 @@
                                 <h3 class="text-light mb-0">Our Services</h3>
                             </div>
                             <div class="link-animated d-flex flex-column justify-content-start" role="list">
-                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                <a class="text-light mb-2" href="service.html#cybersecurity" role="listitem">
                                     <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Cybersecurity
                                 </a>
-                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                <a class="text-light mb-2" href="service.html#cloud" role="listitem">
                                     <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Cloud Solutions
                                 </a>
-                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                <a class="text-light mb-2" href="service.html#networking" role="listitem">
                                     <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Networking
                                 </a>
-                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                <a class="text-light mb-2" href="service.html#software" role="listitem">
                                     <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Software Development
                                 </a>
-                                <a class="text-light mb-2" href="service.html" role="listitem">
+                                <a class="text-light mb-2" href="service.html#infrastructure" role="listitem">
                                     <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>IT Infrastructure
                                 </a>
-                                <a class="text-light" href="service.html" role="listitem">
+                                <a class="text-light" href="service.html#managed" role="listitem">
                                     <i class="bi bi-arrow-right text-primary me-2" aria-hidden="true"></i>Managed IT Services
                                 </a>
                             </div>
@@ -724,6 +889,7 @@
          ============================================ -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top" aria-label="Back to top" role="button">
         <i class="bi bi-arrow-up" aria-hidden="true"></i>
+        <span class="visually-hidden">Back to top</span>
     </a>
 
     <!-- ============================================
@@ -746,13 +912,30 @@
     <!-- Template Main JavaScript -->
     <script src="js/main.js" defer></script>
     
-    <!-- Additional Scripts -->
+    <!-- Enhanced Homepage Scripts -->
     <script>
+        'use strict';
+        
         // Dynamic copyright year
         document.addEventListener('DOMContentLoaded', function() {
             const yearElement = document.getElementById('currentYear');
             if (yearElement) {
                 yearElement.textContent = new Date().getFullYear();
+            }
+            
+            // Initialize WOW.js with reduced motion check
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion && typeof WOW !== 'undefined') {
+                new WOW().init();
+            }
+            
+            // Initialize counter up
+            if (typeof $.fn.counterUp !== 'undefined') {
+                $('[data-toggle="counter-up"]').counterUp({
+                    delay: 10,
+                    time: 2000,
+                    begin: 0
+                });
             }
             
             // Lazy loading images
@@ -772,23 +955,101 @@
                 lazyImages.forEach(img => imageObserver.observe(img));
             }
             
-            // Simple performance monitoring
-            if (window.performance && window.performance.timing) {
-                console.log('Page fully loaded in: ' + (performance.timing.loadEventEnd - performance.timing.navigationStart) + 'ms');
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId !== '#') {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Add loading class to images
+            const allImages = document.querySelectorAll('img');
+            allImages.forEach(img => {
+                if (img.complete) {
+                    img.classList.add('loaded');
+                } else {
+                    img.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                    });
+                }
+            });
+            
+            // Cookie consent initialization
+            if (typeof window.cookieconsent !== 'undefined') {
+                window.cookieconsent.initialise({
+                    "palette": {
+                        "popup": { 
+                            "background": "#091E3E",
+                            "text": "#ffffff"
+                        },
+                        "button": { 
+                            "background": "#06A3DA",
+                            "text": "#ffffff"
+                        }
+                    },
+                    "theme": "classic",
+                    "position": "bottom-right",
+                    "content": {
+                        "message": "We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.",
+                        "dismiss": "Got it!",
+                        "link": "Learn more",
+                        "href": "privacy-policy.html"
+                    }
+                });
+            }
+            
+            // Performance monitoring
+            if (window.performance && window.performance.timing && window.location.hostname === 'localhost') {
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                console.log(`Page loaded in: ${loadTime}ms`);
+            }
+            
+            // Add touch-friendly class for mobile devices
+            if ('ontouchstart' in window) {
+                document.body.classList.add('touch-device');
+            }
+            
+            // Service Worker registration for PWA (Optional)
+            if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    }).catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
             }
         });
+        
+        // Handle offline/online status
+        window.addEventListener('online', function() {
+            document.body.classList.remove('offline');
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success position-fixed bottom-0 end-0 m-3';
+            alert.innerHTML = '<i class="fas fa-wifi me-2"></i>Back online!';
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3000);
+        });
+        
+        window.addEventListener('offline', function() {
+            document.body.classList.add('offline');
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-warning position-fixed bottom-0 end-0 m-3';
+            alert.innerHTML = '<i class="fas fa-wifi-slash me-2"></i>You are offline. Some features may be unavailable.';
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        });
     </script>
-    
-    <!--
-        ============================================
-        PERFORMANCE NOTES:
-        - All non-critical JavaScript loaded with 'defer'
-        - Images use lazy loading where appropriate
-        - Critical CSS inlined for above-the-fold content
-        - Preconnect and preload for external resources
-        - Google Fonts loaded with 'media="print"' then swapped
-        ============================================
-    -->
 </body>
 
 </html>
